@@ -71,7 +71,7 @@ namespace RugpViewer {
           h.Indeterminate = (completion < 0);
           h.StatusMessage = statusText;
         });
-      });
+      }, this);
 
       atv.Analysis = findAllImagesAnalysis;
     }

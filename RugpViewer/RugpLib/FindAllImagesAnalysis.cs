@@ -88,7 +88,7 @@ namespace RugpLib {
 
         _Handle(ro);
 
-        if (_imagesFound > 4) break;
+        //if (_imagesFound > 100) break;
 
         ++_numProcessed;
       }

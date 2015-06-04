@@ -113,8 +113,9 @@ namespace RugpViewer {
   public delegate void LongRunningTask(IProgressHandler handler);
 
   public static class Progress {
-    public static void run(LongRunningTask t) {
+    public static void run(LongRunningTask t, Window parentWindow=null) {
       var w = new ProgressWindow();
+      w.Owner = parentWindow;
       w.Loaded += (_, args) => {
         var bw = new BackgroundWorker();
 

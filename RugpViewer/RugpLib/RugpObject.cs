@@ -424,6 +424,7 @@ namespace RugpLib {
 
     void _LoadOpaque1(IMultiFileCursor c) {
       _InitBuffers();
+      EncodingMethod = EEncodingMethod.Opaque1;
 
       for (uint y=0; y<Height; ++y) {
         int count = -1;
@@ -456,7 +457,7 @@ namespace RugpLib {
             g = clampu(g + dg*2);
             b = clampu(b + db*2);
             r = clampu(r + c.ReadPackedSigned()*2);
-            b = clampu(r + c.ReadPackedSigned()*2);
+            b = clampu(b + c.ReadPackedSigned()*2);
           }
 
           _Set((uint)x,(uint)y, (byte)r,(byte)g,(byte)b, 255);
@@ -482,16 +483,20 @@ namespace RugpLib {
 
     void _LoadOpaque2(IMultiFileCursor c) {
       _InitBuffers();
+      EncodingMethod = EEncodingMethod.Opaque2;
 
       // depth is 0x??BBGGRR
       int rdepth = (int)(Depth >>  8) & 0xFF;
       int gdepth = (int)(Depth >> 16) & 0xFF;
       int bdepth = (int)(Depth >> 24) & 0xFF;
+      int r;
+      int g;
+      int b;
       for (int y=0;y<Height;++y) {
         int count = -1;
-        int r = 0;
-        int g = 0;
-        int b = 0;
+        r = 0;
+        g = 0;
+        b = 0;
         int x = 0;
 
         while (x < Width) {
@@ -532,6 +537,7 @@ namespace RugpLib {
    
     void _LoadTransparent(IMultiFileCursor c) {
       _InitBuffers();
+      EncodingMethod = EEncodingMethod.Transparent;
 
       for (int y=0; y<Height; ++y) {
         int x = 0;
@@ -634,9 +640,9 @@ namespace RugpLib {
       _interleaved = new byte[Width*Height*4];
       for (ushort y = 0; y < Height; ++y)
         for (ushort x = 0; x < Width; ++x) {
-          _interleaved[y * Width*4 + x*4 + 0] = _dataB[y * Width + x];
-          _interleaved[y * Width*4 + x*4 + 1] = _dataG[y * Width + x];
-          _interleaved[y * Width*4 + x*4 + 2] = _dataR[y * Width + x];
+          _interleaved[y * Width * 4 + x * 4 + 0] = _dataR[y * Width + x];
+          _interleaved[y * Width * 4 + x * 4 + 1] = _dataG[y * Width + x];
+          _interleaved[y * Width * 4 + x * 4 + 2] = _dataB[y * Width + x];
           _interleaved[y * Width * 4 + x * 4 + 3] = _dataA[y * Width + x];// (byte)(127 + _dataA[y * Width + x] / 2);
         }
     }
@@ -694,6 +700,12 @@ namespace RugpLib {
       return o;
     }
 
+    public enum EEncodingMethod {
+      Opaque1,
+      Opaque2,
+      Transparent,
+    }
+
     public uint Unk1 { get; set; }
     public ushort Unk2 { get; set; }
     public ushort Unk3 { get; set; }
@@ -707,6 +719,7 @@ namespace RugpLib {
     public uint DataSize { get; set; }
     public uint Unk7 { get; set; }
     public uint Unk8 { get; set; }
+    public EEncodingMethod EncodingMethod { get; set; }
 
     byte[] _dataR;
     byte[] _dataG;

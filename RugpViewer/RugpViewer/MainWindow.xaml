@@ -1,0 +1,63 @@
+﻿<Window
+        x:Uid="Window_1" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:s="clr-namespace:RugpViewer" xmlns:p="clr-namespace:RugpViewer.Properties"
+        xmlns:RugpViewer="clr-namespace:RugpViewer" x:Class="RugpViewer.MainWindow"
+        Title="{x:Static p:Resources.rUGPViewer}" Height="768" Width="1400" ResizeMode="CanResizeWithGrip">
+  <Window.CommandBindings>
+    <CommandBinding x:Uid="CommandBinding_1" Command="Open" CanExecute="CmdOpen_CanExecute" Executed="CmdOpen_Executed" />
+    <CommandBinding x:Uid="CommandBinding_2" Command="s:CustomCommands.FindAllImages" CanExecute="CmdFindAllImages_CanExecute" Executed="CmdFindAllImages_Executed" />
+  </Window.CommandBindings>
+  <Grid x:Uid="Grid_1">
+    <Grid.RowDefinitions>
+      <RowDefinition x:Uid="RowDefinition_1" Height="Auto" />
+      <RowDefinition x:Uid="RowDefinition_2" />
+      <RowDefinition x:Uid="RowDefinition_3" Height="Auto" />
+    </Grid.RowDefinitions>
+    <ToolBarTray x:Uid="ToolBarTray_1" Grid.Row="0">
+      <ToolBar x:Uid="ToolBar_1">
+        <ToolBarPanel x:Uid="ToolBarPanel_1">
+          <Menu x:Uid="Menu_1">
+            <MenuItem x:Uid="MenuItem_1" Header="{x:Static p:Resources.FileMenuLabel}">
+              <MenuItem x:Uid="MenuItem_2" Header="{x:Static p:Resources.OpenMenuLabel}" Command="Open" ToolTip="{x:Static p:Resources.OpenToolTip}" />
+              <MenuItem x:Uid="MenuItem_3" Header="{x:Static p:Resources.SaveImageMenuLabel}" Command="s:CustomCommands.SaveImage" ToolTip="{x:Static p:Resources.SaveImageToolTip}"  CommandTarget="{Binding ElementName=ov}" />
+            </MenuItem>
+            <MenuItem x:Uid="MenuItem_4" Header="{x:Static p:Resources.AnalysisMenuLabel}">
+              <MenuItem x:Uid="MenuItem_5" Header="{x:Static p:Resources.FindAllImagesMenuLabel}" Command="s:CustomCommands.FindAllImages" ToolTip="{x:Static p:Resources.FindAllImagesToolTip}" />
+            </MenuItem>
+          </Menu>
+        </ToolBarPanel>
+        <Separator x:Uid="Separator_1"/>
+        <ToolBarPanel x:Uid="ToolBarPanel_2" Orientation="Horizontal">
+          <Button x:Uid="Button_1" Command="Open" ToolTip="{x:Static p:Resources.OpenToolTip}">
+            <Image x:Uid="Image_1" Source="Icons/Open_6529.png"/>
+          </Button>
+          <Button x:Uid="Button_2" Command="s:CustomCommands.SaveImage" ToolTip="{x:Static p:Resources.SaveImageToolTip}"
+                  CommandTarget="{Binding ElementName=ov}" Content="{x:Static p:Resources.SaveImageButtonLabel}" />
+        </ToolBarPanel>
+      </ToolBar>
+    </ToolBarTray>
+    <Grid x:Uid="Grid_2" Grid.Row="1">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition x:Uid="ColumnDefinition_1" Width="320" />
+        <ColumnDefinition x:Uid="ColumnDefinition_2" Width="Auto" />
+        <ColumnDefinition x:Uid="ColumnDefinition_3" />
+      </Grid.ColumnDefinitions>
+      <TabControl x:Uid="TabControl_1" Grid.Column="0">
+        <TabItem x:Uid="TabItem_1" Header="{x:Static p:Resources.ResourcesTabLabel}">
+          <RugpViewer:ResourceTreeView x:Uid="rtv" HorizontalAlignment="Stretch" x:Name="rtv" />
+        </TabItem>
+        <TabItem x:Uid="TabItem_2" Header="{x:Static p:Resources.AnalysisTabLabel}">
+          <RugpViewer:AnalysisTreeView x:Uid="atv" HorizontalAlignment="Stretch" x:Name="atv" />
+        </TabItem>
+      </TabControl>      
+      <GridSplitter x:Uid="GridSplitter_1" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="5"/>
+      <RugpViewer:ObjectViewer x:Uid="ov" Grid.Column="2" x:Name="ov" />
+    </Grid>
+    <StatusBar x:Uid="StatusBar_1" Grid.Row="2">
+      <StatusBarItem x:Uid="StatusBarItem_1">
+        <TextBlock x:Uid="TextBlock_1" Text="{x:Static p:Resources.rUGPViewer}" />
+      </StatusBarItem>
+    </StatusBar>
+  </Grid>
+</Window>

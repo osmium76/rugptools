@@ -7,6 +7,13 @@ Currently supports the initial DVD release of MLA; probably doesn't work with an
 
 Currently you can view background images (no character art), and hex dumps of objects.
 
+Download
+========
+
+[Download binaries here.](https://github.com/osmium76/rugptools/releases)
+
+Requires .NET 4.5.
+
 Issues
 ======
 
